@@ -57,13 +57,13 @@ Here is a list of the key factors discussed:
 
 
 # Recording methodology
-Minimising player/equipment-dependent cross-recording variation
+## Minimising player/equipment-dependent cross-recording variation
 The same microphone will be used for all audio recordings. The position of the microphone will be the same across recordings.
 A plectrum of thickness 0.71mm will be used for plucking. This is to eliminate plucking variations caused when using the thumb or fingers (e.g. nail shape and length, plucking angle and strength).
 The absolute position where the string will be plucked will be marked on the guitar body and the plectrum will be aligned with it. The position will be aligned with the middle of the sound hole. This is to eliminate timbral variations caused by plucking distance along the string, e.g. sul ponticello (closer to the bridge) will produce a brighter and sharper sound, and sul tasto (closer to/over the fretboard) will produce a softer and warmer sound.
 All recordings for a particular note (e.g. same note in three different positions) will be taken in the same session to minimize plucking variation across recordings.
 
-Note selection for proof-of-concept
+## Note selection for proof-of-concept
 I decided to intentionally constrain the recording dataset to five notes and 15 string/fret positions (three per note) to test whether physically motivated timbral features can distinguish alternative playing positions before scaling to a larger search space. This allowed controlled experimentation and detailed failure analysis without spending more time taking recordings than analysing the data.
 Note	Positions (string, fret)	Reason
 E4	(1, 0)
@@ -83,15 +83,17 @@ G3	(3, 0)
 (5, 10)	chosen to investigate the behaviour of nylon vs wound strings
 
 Initially, 5 recordings will be taken for each position for each note. This should be enough to identify anomalous results without using too much time just for recordings.
-Data preprocessing
-File format
+
+# Data preprocessing
+## File format
 All recordings will be recorded in the M4A format with a sampling rate of 48000Hz. since this is the default audio recording format on my smartphone. These recordings will then be converted into WAV to simplify analysis.
  WAV was used because it provides straightforward access to uncompressed PCM samples, avoiding additional codec-decoding steps and lossy-compression artefacts that could affect spectral and harmonic features.
 
 Mono audio will be used instead of stereo to simplify analysis (only need to analyse one data stream instead of 2)
 Recording filenames will follow the format:
 "{note name}__S{string number}_F{fret number}_{recording number}"
-Metadata
+
+## Metadata
 A program (capturing_start_end_data_for_csv.py) will be used to capture and save metadata in a csv file (metadata.csv) for each recording – the note, string, fret, and take/recording will be extracted from the filename.
 The onset time and RMS peak time will be captured. This will be useful because each in recording the pluck will not happen at exactly the same time, so these features can help determine where the useful part of the recording (the note) actually starts.
 Due to the presence of transients during the initial attack of the note, it may be better to perform analysis during the sustain of the note, when these transients have faded. As an initial rule, the analysis start time will be 0.25s after the RMS peak time. The analysis window will be 0.5s long.
