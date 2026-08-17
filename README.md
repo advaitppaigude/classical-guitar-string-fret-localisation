@@ -48,11 +48,11 @@ Thicker strings usually provide a longer sustain. Because they have more mass, t
 Analysing the temporal envelope for attack time, decay time, and the general RMS envelope “shape” for recordings of the same note played in different positions could reveal differences in behaviour. However, this feature is also the most susceptible to plucking variation.
 
 Here is a list of the key factors discussed:
-	Harmonics and their amplitudes, amplitude ratios
-	Mean relative harmonic deviation from ideal harmonic series
-	Spectral centroid
-	Rolloff
-	Temporal envelope for attack and decay characteristics
+- Harmonics and their amplitudes, amplitude ratios
+- Mean relative harmonic deviation from ideal harmonic series
+- Spectral centroid
+- Rolloff
+- Temporal envelope for attack and decay characteristics
 
 
 
@@ -65,22 +65,125 @@ All recordings for a particular note (e.g. same note in three different position
 
 ## Note selection for proof-of-concept
 I decided to intentionally constrain the recording dataset to five notes and 15 string/fret positions (three per note) to test whether physically motivated timbral features can distinguish alternative playing positions before scaling to a larger search space. This allowed controlled experimentation and detailed failure analysis without spending more time taking recordings than analysing the data.
-Note	Positions (string, fret)	Reason
-E4	(1, 0)
+
+convert this table to markdown:
+
+
+
+
+
+|     |
+| --- |
+
+**Note**
+
+|     |
+| --- |
+
+**Positions (string, fret)**
+
+|     |
+| --- |
+
+**Reason**
+
+|     |
+| --- |
+
+E4
+
+|     |
+| --- |
+
+(1, 0)
+
 (2, 5)
-(3, 9)	chosen to investigate the behaviour of open vs fretted nylon strings
-D3	(4, 0)
+
+(3, 9)
+
+|     |
+| --- |
+
+chosen to   investigate the behaviour of open vs fretted nylon strings
+
+|     |
+| --- |
+
+D3
+
+|     |
+| --- |
+
+(4, 0)
+
 (5, 5)
-(6, 10)	chosen to investigate the behaviour of open vs fretted wound strings
-F4	(1, 1)
+
+(6, 10)
+
+|     |
+| --- |
+
+chosen to   investigate the behaviour of open vs fretted wound strings
+
+|     |
+| --- |
+
+F4
+
+|     |
+| --- |
+
+(1, 1)
+
 (2, 6)
-(3, 10)	chosen to investigate the behaviour of fretted nylon strings
-E3	(4, 2)
+
+(3, 10)
+
+|     |
+| --- |
+
+chosen to   investigate the behaviour of fretted nylon strings
+
+|     |
+| --- |
+
+E3
+
+|     |
+| --- |
+
+(4, 2)
+
 (5, 7)
-(6, 12)	chosen to investigate the behaviour of fretted wound strings
-G3	(3, 0)
+
+(6, 12)
+
+|     |
+| --- |
+
+chosen to   investigate the behaviour of fretted wound strings
+
+|     |
+| --- |
+
+G3
+
+|     |
+| --- |
+
+(3, 0)
+
 (4, 5)
-(5, 10)	chosen to investigate the behaviour of nylon vs wound strings
+
+(5, 10)
+
+|     |
+| --- |
+
+chosen to   investigate the behaviour of nylon vs wound strings
+
+
+
 
 Initially, 5 recordings will be taken for each position for each note. This should be enough to identify anomalous results without using too much time just for recordings.
 
