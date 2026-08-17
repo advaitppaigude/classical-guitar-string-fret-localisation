@@ -66,122 +66,13 @@ All recordings for a particular note (e.g. same note in three different position
 ## Note selection for proof-of-concept
 I decided to intentionally constrain the recording dataset to five notes and 15 string/fret positions (three per note) to test whether physically motivated timbral features can distinguish alternative playing positions before scaling to a larger search space. This allowed controlled experimentation and detailed failure analysis without spending more time taking recordings than analysing the data.
 
-convert this table to markdown:
-
-
-
-
-
-|     |
-| --- |
-
-**Note**
-
-|     |
-| --- |
-
-**Positions (string, fret)**
-
-|     |
-| --- |
-
-**Reason**
-
-|     |
-| --- |
-
-E4
-
-|     |
-| --- |
-
-(1, 0)
-
-(2, 5)
-
-(3, 9)
-
-|     |
-| --- |
-
-chosen to   investigate the behaviour of open vs fretted nylon strings
-
-|     |
-| --- |
-
-D3
-
-|     |
-| --- |
-
-(4, 0)
-
-(5, 5)
-
-(6, 10)
-
-|     |
-| --- |
-
-chosen to   investigate the behaviour of open vs fretted wound strings
-
-|     |
-| --- |
-
-F4
-
-|     |
-| --- |
-
-(1, 1)
-
-(2, 6)
-
-(3, 10)
-
-|     |
-| --- |
-
-chosen to   investigate the behaviour of fretted nylon strings
-
-|     |
-| --- |
-
-E3
-
-|     |
-| --- |
-
-(4, 2)
-
-(5, 7)
-
-(6, 12)
-
-|     |
-| --- |
-
-chosen to   investigate the behaviour of fretted wound strings
-
-|     |
-| --- |
-
-G3
-
-|     |
-| --- |
-
-(3, 0)
-
-(4, 5)
-
-(5, 10)
-
-|     |
-| --- |
-
-chosen to   investigate the behaviour of nylon vs wound strings
-
+| Note | Positions (string, fret) | Reason |
+|---|---|---|
+| E4 | (1, 0)<br>(2, 5)<br>(3, 9) | chosen to investigate the behaviour of open vs fretted nylon strings |
+| D3 | (4, 0)<br>(5, 5)<br>(6, 10) | chosen to investigate the behaviour of open vs fretted wound strings |
+| F4 | (1, 1)<br>(2, 6)<br>(3, 10) | chosen to investigate the behaviour of fretted nylon strings |
+| E3 | (4, 2)<br>(5, 7)<br>(6, 12) | chosen to investigate the behaviour of fretted wound strings |
+| G3 | (3, 0)<br>(4, 5)<br>(5, 10) | chosen to investigate the behaviour of nylon vs wound strings |
 
 
 
