@@ -252,7 +252,7 @@ Temporal features were therefore not included in the final classifier, with
 the classifier instead prioritising spectral and harmonic features.
 
 A more detailed account of this investigation is available in the
-[development log](docs/development_log.pdf).
+[development log](docs/String_Fret_Localisation_Development_Log_18_08_session_0.docx).
 
 
 ## Feature Extraction
