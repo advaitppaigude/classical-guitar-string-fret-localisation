@@ -313,15 +313,15 @@ However, later-session testing showed that it could become numerically unstable 
 
 It was therefore replaced by a logarithmic ratio:
 
-$$
-R_{\log}
+```math
+R_{\mathrm{log}}
 =
-\ln\left(
+\log\left(
 \frac{H_3 + \epsilon}{H_2 + \epsilon}
 \right)
-$$
+```
 
-where \(\epsilon\) prevents division by zero.
+where $/epsilon$ prevents division by zero.
 
 The logarithmic transformation compresses extreme ratios while retaining information about the relative strength of the two harmonics.
 
