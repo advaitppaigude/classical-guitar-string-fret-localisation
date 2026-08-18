@@ -314,9 +314,9 @@ However, later-session testing showed that it could become numerically unstable 
 It was therefore replaced by a logarithmic ratio:
 
 $$
-R_{\mathrm{log}}
+R_{\log}
 =
-\log\left(
+\ln\left(
 \frac{H_3 + \epsilon}{H_2 + \epsilon}
 \right)
 $$
