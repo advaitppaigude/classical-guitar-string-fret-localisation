@@ -314,7 +314,7 @@ However, later-session testing showed that it could become numerically unstable 
 It was therefore replaced by a logarithmic ratio:
 
 $$
-R_{\log}
+R_{\mathrm{log}}
 =
 \log\left(
 \frac{H_3 + \epsilon}{H_2 + \epsilon}
@@ -322,6 +322,8 @@ R_{\log}
 $$
 
 where \(\epsilon\) prevents division by zero.
+
+The logarithmic transformation compresses extreme ratios while retaining information about the relative strength of the two harmonics.
 
 ---
 
