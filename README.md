@@ -390,43 +390,7 @@ The logarithmic transformation improved the stability of the feature representat
 
 For a new recording, the final pipeline performs:
 
-```text
-Audio recording
-      │
-      ▼
-Waveform loading + normalisation
-      │
-      ▼
-RMS peak detection
-      │
-      ▼
-0.5 s analysis window
-      │
-      ▼
-FFT
-      │
-      ├──► Fundamental frequency ──► Musical note
-      │
-      ▼
-Harmonic peak detection
-      │
-      ▼
-Feature extraction
-      │
-      ▼
-Select training data for detected note
-      │
-      ▼
-Feature standardisation
-      │
-      ▼
-Logistic regression
-      │
-      ▼
-Predicted string/fret position
-+ model probability
-+ next-best position
-```
+![Pipeline flowchart](plots/pipeline_flowchart.png)
 
 In algorithmic terms:
 
