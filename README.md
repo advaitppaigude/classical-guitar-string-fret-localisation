@@ -390,7 +390,7 @@ The logarithmic transformation improved the stability of the feature representat
 
 For a new recording, the final pipeline performs:
 
-![Pipeline flowchart](plots/pipeline_diagram.png)
+![Pipeline flowchart](plots/pipeline_diagram.svg)
 
 In algorithmic terms:
 
