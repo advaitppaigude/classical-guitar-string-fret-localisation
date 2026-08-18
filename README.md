@@ -316,15 +316,12 @@ It was therefore replaced by a logarithmic ratio:
 $$
 R_{\log}
 =
-\log
-\left(
+\log\left(
 \frac{H_3 + \epsilon}{H_2 + \epsilon}
 \right)
 $$
 
 where \(\epsilon\) prevents division by zero.
-
-The logarithmic transformation compresses extreme ratios while retaining information about the relative strength of the two harmonics.
 
 ---
 
