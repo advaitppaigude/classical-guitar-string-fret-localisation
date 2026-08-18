@@ -321,7 +321,7 @@ R_{\mathrm{log}}
 \right)
 ```
 
-where $/epsilon$ prevents division by zero.
+where $\epsilon$ prevents division by zero.
 
 The logarithmic transformation compresses extreme ratios while retaining information about the relative strength of the two harmonics.
 
