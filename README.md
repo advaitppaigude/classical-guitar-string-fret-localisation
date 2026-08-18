@@ -8,7 +8,7 @@ Frets 0 to 12 will be considered on each string. This spans one octave on each s
 The minimum viable output should be the string and fret position. In future development, factors like inference time and classification confidence may also be explored.
 
 
-# aspects to consider
+# Aspects to consider
 Timbre is the unique quality or “colour” of sound. Words often used to describe timbre are “bright”, “warm”, “mellow”, “dark” or “piercing. Relevant contributors to timbre include the spectral distribution of harmonics, the physical properties of the vibrating system, and temporal characteristics such as attack and decay.
 
 When a note is plucked, there are extra vibrations at higher frequencies than the note being played. Some strings may produce stronger higher harmonics when they are plucked, making them sound brighter or sharper. Others may have fewer harmonics, resulting in them sounding warmer/more mellow.
