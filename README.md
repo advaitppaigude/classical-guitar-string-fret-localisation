@@ -202,13 +202,13 @@ Mono audio was used because only a single waveform was required for the analysis
 Files followed the naming convention:
 
 ```text
-{note}__S{string}_F{fret}_{take}.wav
+{note}_S{string}_F{fret}_{take}.wav
 ```
 
 For example:
 
 ```text
-E4__S2_F5_03.wav
+E4_S2_F5_03.wav
 ```
 
 ### Metadata and Analysis Window
