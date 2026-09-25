@@ -2,6 +2,12 @@
 
 ## Aim
 
+This project investigates whether the **string/fret position of an isolated classical-guitar note can be inferred directly from its audio recording**.
+
+**Input:** a recording of a single isolated plucked note on a classical guitar in standard tuning.
+
+**Output:** the predicted string and fret position.
+
 The same musical note can be played at multiple string/fret positions on a guitar. For example, **E4** can be played as:
 
 - string 1, fret 0;
@@ -10,13 +16,7 @@ The same musical note can be played at multiple string/fret positions on a guita
 
 Although these positions produce approximately the same fundamental frequency, they differ in **timbre** because the physical string and vibrating length are different.
 
-This project investigates whether the **string/fret position of an isolated classical-guitar note can be inferred directly from its audio recording**.
-
 The proof of concept considers five notes and their alternative playing positions within frets 0–12.
-
-**Input:** a recording of a single isolated plucked note on a classical guitar in standard tuning.
-
-**Output:** the predicted string and fret position.
 
 ---
 
