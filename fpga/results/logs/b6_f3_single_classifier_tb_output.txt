@@ -1,0 +1,69 @@
+(.venv) advait@DESKTOP-8D72OLA:~/classical-guitar-string-fret-localisation$ make -C fpga/tb/mac BITS=6
+make: Entering directory '/home/advait/classical-guitar-string-fret-localisation/fpga/tb/mac'
+rm -f sim_build/classifier_b6/results.xml
+"make" -f Makefile sim_build/classifier_b6/results.xml
+make[1]: Entering directory '/home/advait/classical-guitar-string-fret-localisation/fpga/tb/mac'
+rm -f sim_build/classifier_b6/results.xml
+MODULE=single_classifier_functional_validation TESTCASE= TOPLEVEL=b6_f3_fsm_v1_pipelined TOPLEVEL_LANG=verilog \
+         sim_build/classifier_b6/Vtop
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:108  in set_program_name_in_venv        Using Python virtual environment interpreter at /home/advait/classical-guitar-string-fret-localisation/.venv/bin/python
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:101  in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Verilator version 5.032 2025-01-01
+     0.00ns INFO     cocotb                             Running tests with cocotb v1.9.2 from /home/advait/classical-guitar-string-fret-localisation/.venv/lib/python3.14/site-packages/cocotb
+     0.00ns INFO     cocotb                             Seeding Python random module with 1795100491
+     0.00ns INFO     cocotb.regression                  pytest not found, install it to enable better AssertionError messages
+     0.00ns INFO     cocotb.regression                  Found test single_classifier_functional_validation.functional_validation
+     0.00ns INFO     cocotb.regression                  running functional_validation (1/1)
+E4:
+Feature range: -1.9137385486514618 3.200325901416304
+Weight range: -0.8214870673886104 0.9380427613567961
+Bias range: -0.6384283044380665 0.4295968022493599
+Format 6/3 | Agreement: 30/30
+Clipped weights: 0 / 24
+Clipped features: 0/240
+
+D3:
+Feature range: -3.0278042720761396 2.676027174961085
+Weight range: -0.7091229129207715 0.9182608669037721
+Bias range: -0.7887742297511889 0.9242100416718878
+Format 6/3 | Agreement: 30/30
+Clipped weights: 0 / 24
+Clipped features: 0/240
+
+E3:
+Feature range: -2.9399086398151124 3.031210631697472
+Weight range: -1.4781759798345506 1.0713804115102825
+Bias range: -0.27534045575452093 0.4548191826193653
+Format 6/3 | Agreement: 30/30
+Clipped weights: 0 / 24
+Clipped features: 0/240
+
+F4:
+Feature range: -2.5917101846144863 3.4049426514103076
+Weight range: -0.9411984221140586 1.0081353381330382
+Bias range: -0.6519703244479493 0.7522198958313503
+Format 6/3 | Agreement: 30/30
+Clipped weights: 0 / 24
+Clipped features: 0/240
+
+G3:
+Feature range: -2.970255330339721 3.7846602221913086
+Weight range: -1.0453534568669982 0.9862720809118588
+Bias range: -0.12388682349835153 0.18041981925602524
+Format 6/3 | Agreement: 30/30
+Clipped weights: 0 / 24
+Clipped features: 0/240
+
+ 16505.00ns INFO     cocotb.b6_f3_fsm_v1_pipelined      Validated 150 exact classifier predictions
+ 16505.00ns INFO     cocotb.regression                  functional_validation passed
+ 16505.00ns INFO     cocotb.regression                  ***********************************************************************************************************************
+                                                        ** TEST                                                           STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                        ***********************************************************************************************************************
+                                                        ** single_classifier_functional_validation.functional_validation   PASS       16505.00           0.13     131766.07  **
+                                                        ***********************************************************************************************************************
+                                                        ** TESTS=1 PASS=1 FAIL=0 SKIP=0                                               16505.00           0.36      45262.67  **
+                                                        ***********************************************************************************************************************
+
+- :0: Verilog $finish
+make[1]: Leaving directory '/home/advait/classical-guitar-string-fret-localisation/fpga/tb/mac'
+make: Leaving directory '/home/advait/classical-guitar-string-fret-localisation/fpga/tb/mac'

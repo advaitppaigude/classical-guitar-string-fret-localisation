@@ -5,6 +5,9 @@ import matplotlib.pyplot as plt
 import scipy.io
 from scipy.io import wavfile
 from scipy.signal import find_peaks
+from pathlib import Path
+
+WAV_FOLDER = Path(__file__).resolve().parents[1] / "Recordings"
 
 # measured experimentally
 
@@ -65,7 +68,7 @@ secondary_peak_heights = []
 secondary_peak_prominences = []
 
 for i in range(5):
-	rate, normalised_data = get_normalised_waveform(f"Ei_{i+1}.wav")
+	rate, normalised_data = get_normalised_waveform(WAV_FOLDER / f"Ei_{i+1}.wav")
 	RMS_times, RMS_data = get_normalised_RMS_envelope(rate, normalised_data)
 	plt.plot(RMS_times, RMS_data, label = f"String 1 Fret 0 E {i+1}")
 

@@ -2,29 +2,47 @@
 
 import math
 import sys
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import Pipeline
 
-from signal_processing import (
-    get_normalised_waveform,
-    get_rms_envelope,
-    find_onset_time,
-    find_rms_peak_and_time,
-    get_fft,
-    find_fundamental,
-    find_harmonic_peaks,
-    calculate_harmonic_centroid,
-    calculate_spectral_centroid,
-    calculate_mean_relative_harmonic_deviation,
-    safe_divide,
-    log_h3_h2,
-)
+if __package__:
+    from .signal_processing import (
+        get_normalised_waveform,
+        get_rms_envelope,
+        find_onset_time,
+        find_rms_peak_and_time,
+        get_fft,
+        find_fundamental,
+        find_harmonic_peaks,
+        calculate_harmonic_centroid,
+        calculate_spectral_centroid,
+        calculate_mean_relative_harmonic_deviation,
+        safe_divide,
+        log_h3_h2,
+    )
+else:
+    from signal_processing import (
+        get_normalised_waveform,
+        get_rms_envelope,
+        find_onset_time,
+        find_rms_peak_and_time,
+        get_fft,
+        find_fundamental,
+        find_harmonic_peaks,
+        calculate_harmonic_centroid,
+        calculate_spectral_centroid,
+        calculate_mean_relative_harmonic_deviation,
+        safe_divide,
+        log_h3_h2,
+    )
 
-
+FEATURES_CSV = Path(__file__).resolve().parents[1] / "data" / "features.csv"
 
 notes = ["E4", "D3", "E3", "F4", "G3"]
 
@@ -85,19 +103,15 @@ def generate_filename_from_numbers(note_name, recording_num):
 
 
 
-def main():
-
-    # allowing wav_path to be passed in terminal
-    if len(sys.argv) != 2:
-        raise ValueError(
-            "Usage: python guitar_string_fret_localiser.py <recording.wav>"
-        )
-
-    wav_path = sys.argv[1]
-
-    dataset_features = pd.read_csv("features.csv")
+def load_dataset_features(features_csv=FEATURES_CSV):
+    """Load the existing feature table without changing its values or row order."""
+    dataset_features = pd.read_csv(features_csv)
     dataset_features["filename"] = dataset_features["filename"].astype(str).str.strip()
+    return dataset_features
 
+
+def extract_recording_features(wav_path):
+    """Return (detected note, raw eight-feature vector) using the original DSP."""
     rate, normalised_data = get_normalised_waveform(wav_path)
 
     rms_times, rms_values = get_rms_envelope(
@@ -126,7 +140,6 @@ def main():
     if note_name not in notes:
         raise ValueError(f"Detected note {note_name}, but this proof-of-concept supports only: {', '.join(notes)}")
 
-    note_num = notes.index(note_name)
     h_freq, h_amp = find_harmonic_peaks(frequency_axis, fft_magnitude, fundamental_frequency, max_harmonic=5)
     harmonic_centroid = calculate_harmonic_centroid(h_freq, h_amp)
     spectral_centroid = calculate_spectral_centroid(frequency_axis, fft_magnitude)
@@ -144,44 +157,76 @@ def main():
         mean_relative_harmonic_deviation
         ], dtype=float)
 
+    return note_name, input_vector
 
+
+def train_note_classifier(note_name, dataset_features=None):
+    """Fit and return the original StandardScaler/LogisticRegression pipeline.
+
+    Select exactly takes 01–10 at each of the note's three original positions,
+    in the original order (30 rows). No evaluation split is introduced here.
+    Supply a loaded feature DataFrame to reuse it when training several notes.
+    """
+    if note_name not in notes:
+        raise ValueError(f"Unsupported note {note_name}; choose from {', '.join(notes)}")
+    if dataset_features is None:
+        dataset_features = load_dataset_features()
+    else:
+        dataset_features = dataset_features.copy()
+        dataset_features["filename"] = dataset_features["filename"].astype(str).str.strip()
 
     X = []
     y = []
 
     # generating points from training data
     for recording_num in range(30):
-        filename = generate_filename_from_numbers(notes[note_num], recording_num)
+        filename = generate_filename_from_numbers(note_name, recording_num)
 
         row = dataset_features[dataset_features["filename"] == filename].iloc[0]
 
         X.append(row[feature_columns].to_numpy(dtype=float))
 
-        string = positions[notes[note_num]][recording_num // 10]["S"]
-        fret = positions[notes[note_num]][recording_num // 10]["F"]
+        string = positions[note_name][recording_num // 10]["S"]
+        fret = positions[note_name][recording_num // 10]["F"]
 
         y.append(f"S{string}_F{fret}")
 
     X_train = np.array(X)
     y_train = np.array(y)
 
-    X_test = input_vector.reshape(1, -1)
+    model = Pipeline([
+        ("scaler", StandardScaler()),
+        ("classifier", LogisticRegression()),
+    ])
+    model.fit(X_train, y_train)
+    return model
 
-    # running the model
-    scaler = StandardScaler()
 
-    X_train_std = scaler.fit_transform(X_train)
-    X_test_std = scaler.transform(X_test)
+def predict_features(model, input_features):
+    """Return (labels, probabilities) without fitting or updating the model.
 
-    classifier = LogisticRegression()
+    Accept one raw feature vector or a batch, ordered by feature_columns.
+    Both outputs retain their batch dimension; probability columns follow
+    model.classes_. Reuse the same fitted model for subsequent calls.
+    """
+    vectors = np.atleast_2d(np.asarray(input_features, dtype=float))
+    return model.predict(vectors), model.predict_proba(vectors)
 
-    classifier.fit(X_train_std, y_train)
 
-    # printing results
-    prediction = classifier.predict(X_test_std)[0]
+def main():
+    # Keep the existing positional WAV argument and printed result format.
+    if len(sys.argv) != 2:
+        raise ValueError(
+            "Usage: python guitar_string_fret_localiser.py <recording.wav>"
+        )
 
-    probabilities = classifier.predict_proba(X_test_std)[0]
-    classes = classifier.classes_
+    dataset_features = load_dataset_features()
+    note_name, input_vector = extract_recording_features(sys.argv[1])
+    model = train_note_classifier(note_name, dataset_features)
+    predictions, all_probabilities = predict_features(model, input_vector)
+    prediction = predictions[0]
+    probabilities = all_probabilities[0]
+    classes = model.classes_
 
     predicted_index = np.argmax(probabilities)
     predicted_probability = probabilities[predicted_index]

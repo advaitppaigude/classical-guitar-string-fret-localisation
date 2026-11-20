@@ -14,12 +14,22 @@ import re
 import csv
 
 import numpy as np
-import math
-from scipy.io import wavfile
-from scipy.fft import rfft, rfftfreq
-from scipy.signal.windows import hann
+import pandas as pd
 
-from signal_processing import *
+if __package__:
+    from .signal_processing import (
+        get_normalised_waveform, get_fft, find_h1_near_ideal,
+        find_harmonic_peaks, calculate_harmonic_centroid,
+        calculate_spectral_centroid, calculate_rolloff,
+        calculate_mean_relative_harmonic_deviation, safe_divide, log_h3_h2,
+    )
+else:
+    from signal_processing import (
+        get_normalised_waveform, get_fft, find_h1_near_ideal,
+        find_harmonic_peaks, calculate_harmonic_centroid,
+        calculate_spectral_centroid, calculate_rolloff,
+        calculate_mean_relative_harmonic_deviation, safe_divide, log_h3_h2,
+    )
 
 NOTE_TO_SEMITONE = {
     "C": 0,
@@ -65,9 +75,10 @@ def note_to_ideal_frequency(note):
 
 # file handling
 
-WAV_FOLDER = Path("Recordings")
-METADATA_CSV = Path("metadata.csv")
-OUTPUT_CSV = Path("features.csv")
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+WAV_FOLDER = PROJECT_ROOT / "Recordings"
+METADATA_CSV = PROJECT_ROOT / "data" / "metadata.csv"
+OUTPUT_CSV = PROJECT_ROOT / "data" / "features.csv"
 
 BIN_THRESHOLD_HZ = 10
 
@@ -102,6 +113,7 @@ fieldnames = [
 
     "harmonic_centroid",
     "spectral_centroid",
+    "rolloff_85",
     "mean_relative_harmonic_deviation",
 
     "pitch_error_hz",
@@ -134,23 +146,15 @@ def parse_filename(filename):
 
 
 
-# driver code
-
-metadata = pd.read_csv(METADATA_CSV)
-metadata["filename"] = metadata["filename"].astype(str).str.strip()
-
-# lookup by filename
-metadata_by_filename = metadata.set_index("filename")
-
-rows = []
-
-wav_files = sorted(WAV_FOLDER.glob("*.wav"))
-
-
-
 def main():
+    wav_files = sorted(WAV_FOLDER.glob("*.wav"))
     if len(wav_files) == 0:
         raise FileNotFoundError(f"No WAV files found in {WAV_FOLDER.resolve()}")
+
+    metadata = pd.read_csv(METADATA_CSV)
+    metadata["filename"] = metadata["filename"].astype(str).str.strip()
+    metadata_by_filename = metadata.set_index("filename")
+    rows = []
 
     # iterating through all recordings
     for wav_path in wav_files:

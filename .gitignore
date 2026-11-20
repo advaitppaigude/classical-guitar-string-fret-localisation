@@ -1,0 +1,54 @@
+# Python environments, bytecode, packaging and test caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.ipynb_checkpoints/
+
+# Local recordings (not distributed with this repository)
+/Recordings/
+
+# cocotb and simulator output
+sim_build/
+*.vcd
+*.fst
+*.ghw
+results.xml
+
+# Verilator output
+obj_dir/
+
+# Quartus generated databases, reports, and programming files
+db/
+incremental_db/
+output_files/
+qdb/
+*.qws
+*.qdf
+*.qmsg
+/fpga/quartus/*.rpt
+/fpga/quartus/*.summary
+*.smsg
+*.sof
+*.pof
+*.jic
+*.rbf
+*.srf
+*.done
+*.qip~
+
+# OS metadata
+.DS_Store
+Thumbs.db
+*:Zone.Identifier

@@ -10,16 +10,23 @@ from pathlib import Path
 import re
 import csv
 
-import numpy as np
-from scipy.io import wavfile
-
-from signal_processing import *
+if __package__:
+    from .signal_processing import (
+        get_normalised_waveform, get_rms_envelope,
+        find_onset_time, find_rms_peak_and_time,
+    )
+else:
+    from signal_processing import (
+        get_normalised_waveform, get_rms_envelope,
+        find_onset_time, find_rms_peak_and_time,
+    )
 
 
 # configuration
 
-WAV_FOLDER = Path("Recordings")
-OUTPUT_CSV = Path("metadata.csv")
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+WAV_FOLDER = PROJECT_ROOT / "Recordings"
+OUTPUT_CSV = PROJECT_ROOT / "data" / "metadata.csv"
 
 RMS_WINDOW_S = 0.03 # 30ms
 RMS_HOP_S = 0.005 # 5ms
@@ -52,13 +59,12 @@ def parse_filename(filename):
 
 
 # main batch processing
-rows = []
-
-wav_files = sorted(WAV_FOLDER.glob("*.wav"))
-
 def main():
+    wav_files = sorted(WAV_FOLDER.glob("*.wav"))
     if len(wav_files) == 0:
         raise FileNotFoundError(f"No WAV files found in {WAV_FOLDER.resolve()}")
+
+    rows = []
 
     for wav_path in wav_files:
         try:

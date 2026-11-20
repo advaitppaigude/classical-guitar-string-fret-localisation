@@ -3,11 +3,14 @@
 import numpy as np
 import pandas as pd
 import math
+import argparse
+from pathlib import Path
 
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
-from sklearn.metrics import accuracy_score, classification_report
+
+FEATURES_CSV = Path(__file__).resolve().parents[1] / "data" / "features.csv"
 
 
 notes = ["E4", "D3", "E3", "F4", "G3"]
@@ -29,7 +32,7 @@ feature_columns = [
     "log_h3_h2",
     "spectral_centroid",
     "harmonic_centroid",
-    "inharmonicity",
+    "mean_relative_harmonic_deviation",
 ]
 
 
@@ -65,7 +68,7 @@ def generate_filename_from_numbers(note_num, recording_num):
 # driver code
 
 
-features = pd.read_csv("features.csv")
+features = pd.read_csv(FEATURES_CSV)
 features["filename"] = features["filename"].astype(str).str.strip()
 
 
@@ -84,7 +87,7 @@ def iteration_1():
             distances = []
             string_fret_positions = []
 
-            training_vectors = []
+            training_data = []
             
             for recording_num in range(30):
                 if recording_num != test_recording_num:
@@ -106,7 +109,7 @@ def iteration_1():
                         "position": f"S{string}_F{fret}"
                     })
 
-            training_vectors = np.array(training_vectors)
+            training_vectors = np.array([item["vector"] for item in training_data])
 
             # standardising data
             means = np.mean(training_vectors, axis = 0)
@@ -375,8 +378,24 @@ def iteration_5():
 
 
 
-total = 0
-for i in range(0,5):
-    print(f"For note {notes[i]}, {num_correct_per_note[i]}/30 classifications were correct")
-    total += num_correct_per_note[i]
-print(f"On average, {total / 5}/30 classifications were correct")
+def main():
+    parser = argparse.ArgumentParser(description="Run an original leave-one-out experiment.")
+    parser.add_argument(
+        "--iteration", type=int, choices=(1, 2, 4, 5), default=4,
+        help="1: 3-NN; 2: rank-weighted; 4: logistic regression (default); 5: linear SVM. "
+             "Iteration 3 is unavailable because its original distance_weighting function is missing.",
+    )
+    args = parser.parse_args()
+    num_correct_per_note[:] = [0] * len(notes)
+    experiments = {1: iteration_1, 2: iteration_2, 4: iteration_4, 5: iteration_5}
+    experiments[args.iteration]()
+
+    total = 0
+    for i in range(len(notes)):
+        print(f"For note {notes[i]}, {num_correct_per_note[i]}/30 classifications were correct")
+        total += num_correct_per_note[i]
+    print(f"On average, {total / len(notes)}/30 classifications were correct")
+
+
+if __name__ == "__main__":
+    main()

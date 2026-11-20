@@ -1,5 +1,25 @@
 # String/Fret Localisation for Classical Guitar
 
+## Running the existing software
+
+The tested environment is CPython 3.14.4 on Linux. From the repository root:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m src.classifier_experiments
+python -m unittest discover -s tests -v
+```
+
+For an isolated note recording, run
+`python -m src.guitar_string_fret_localiser /path/to/recording.wav`.
+The tracked feature data is in `data/`; the original WAV recordings are not
+included. See the [software guide](docs/software_maintenance.md) for reusable
+training/inference, extraction commands, corrections, and verification limits.
+
+The independent FPGA extension has a prepared [workspace](fpga/README.md).
+
 ## Aim
 
 This project investigates whether the **string/fret position of an isolated classical-guitar note can be inferred directly from its audio recording**.
@@ -445,7 +465,7 @@ The reported results in these papers are therefore useful context, but should **
 
 A chronological record of feature exploration, failed approaches,
 cross-session robustness testing and classifier development is available in
-the [development log](docs/development_log.pdf).
+the [development log](docs/String_Fret_Localisation_Development_Log_18_08_session_0.docx).
 
 ## References
 

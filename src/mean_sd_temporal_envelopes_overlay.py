@@ -7,6 +7,10 @@ import scipy.io
 from scipy.io import wavfile
 from pathlib import Path
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+METADATA_CSV = PROJECT_ROOT / "data" / "metadata.csv"
+WAV_FOLDER = PROJECT_ROOT / "Recordings"
+
 
 note_name = "G3"
 positions = [{"S": 3, "F": 0}, {"S": 4, "F": 5}, {"S": 5, "F": 10}]
@@ -54,7 +58,7 @@ fig, ax = plt.subplots(figsize=(14, 5))
 # plotting functions
 def draw_current_file():
 
-    metadata = pd.read_csv("metadata.csv")
+    metadata = pd.read_csv(METADATA_CSV)
     metadata["filename"] = metadata["filename"].astype(str).str.strip()
 
     ax.clear()
@@ -68,12 +72,12 @@ def draw_current_file():
                 filename = f"{note_name}_S{positions[current_position]['S']}_F{positions[current_position]['F']}_0{take}.wav"
             else:
                 filename = f"{note_name}_S{positions[current_position]['S']}_F{positions[current_position]['F']}_{take}.wav"
-            
+
             row = metadata[metadata["filename"] == filename].iloc[0]
             start_time = row["onset_time"]
             end_time = row["analysis_end_time"]
-            
-            times, data = get_normalised_RMS_envelope(f"Recordings/{filename}", start_time, end_time)
+
+            times, data = get_normalised_RMS_envelope(WAV_FOLDER / filename, start_time, end_time)
             all_envelopes.append(data)
 
 
