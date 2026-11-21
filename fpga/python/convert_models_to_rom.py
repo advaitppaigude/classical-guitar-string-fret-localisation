@@ -9,6 +9,7 @@ FORMATS = [
     (5, 2),
     (6, 3),
     (8, 4),
+    (10, 5),
 ]
 
 ROOT = Path(__file__).resolve().parents[1]

@@ -4,17 +4,22 @@ TOPLEVEL_LANG = verilog
 
 TB_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
-# One elaboration per format: make BITS=5, make BITS=6, or make BITS=8.
+# One elaboration per format.
 BITS ?= 6
 FORMAT_5 := b5_f2
 FORMAT_6 := b6_f3
 FORMAT_8 := b8_f4
+FORMAT_10 := b10_f5
 FORMAT := $(FORMAT_$(BITS))
 ifeq ($(FORMAT),)
-$(error Unsupported BITS=$(BITS); choose 5, 6, or 8)
+$(error Unsupported BITS=$(BITS); choose 5, 6, 8, or 10)
 endif
 
+ifeq ($(BITS),10)
+TOPLEVEL = parametrised_note_classifier_fsm
+else
 TOPLEVEL = $(FORMAT)_fsm_v1_pipelined
+endif
 MODULE = single_classifier_functional_validation
 
 VERILOG_SOURCES = $(abspath $(TB_DIR)/../../rtl/$(TOPLEVEL).sv) \

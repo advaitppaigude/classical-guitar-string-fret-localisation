@@ -98,7 +98,7 @@ async def functional_validation(dut):
 
     # Parameters are fixed at elaboration; validate only the compiled format.
     feature_bits = len(dut.feature_regs[0])
-    fractional_bits = {5: 2, 6: 3, 8: 4}
+    fractional_bits = {5: 2, 6: 3, 8: 4, 10: 5}
     assert feature_bits in fractional_bits, f"Unsupported BITS={feature_bits}"
     feature_bits_sweep = [feature_bits]
     feature_frac_sweep = [fractional_bits[feature_bits]]
